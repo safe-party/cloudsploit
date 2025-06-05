@@ -1610,6 +1610,7 @@ module.exports = {
         'functionAllUsersPolicy'        : require(__dirname + '/plugins/google/cloudfunctions/functionAllUsersPolicy.js'),
         'serverlessVPCAccess'           : require(__dirname + '/plugins/google/cloudfunctions/serverlessVPCAccess.js'),
         'cloudFunctionNetworkExposure'  : require(__dirname + '/plugins/google/cloudfunctions/cloudFunctionNetworkExposure.js'),
+        'cloudRunPublicAccess'          : require(__dirname + '/plugins/google/cloudrun/cloudRunPublicAccess.js'),
 
         'computeAllowedExternalIPs'     : require(__dirname + '/plugins/google/cloudresourcemanager/computeAllowedExternalIPs.js'),
         'disableAutomaticIAMGrants'     : require(__dirname + '/plugins/google/cloudresourcemanager/disableAutomaticIAMGrants.js'),

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Google Cloud Checks</title>
+<style>
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ddd; padding: 4px; }
+th { cursor: pointer; background-color: #f2f2f2; }
+#filterInput { margin-bottom: 10px; }
+</style>
+<script>
+function sortTable(n) {
+  var table = document.getElementById('checksTable');
+  var rows = Array.from(table.rows).slice(1);
+  var asc = table.getAttribute('data-sort-' + n) !== 'asc';
+  rows.sort(function(a, b) {
+    var t1 = a.cells[n].innerText.toLowerCase();
+    var t2 = b.cells[n].innerText.toLowerCase();
+    if(t1 < t2) return asc ? -1 : 1;
+    if(t1 > t2) return asc ? 1 : -1;
+    return 0;
+  });
+  rows.forEach(function(r) { table.tBodies[0].appendChild(r); });
+  table.setAttribute('data-sort-' + n, asc ? 'asc' : 'desc');
+}
+function filterTable() {
+  var input = document.getElementById('filterInput');
+  var filter = input.value.toLowerCase();
+  var table = document.getElementById('checksTable');
+  var rows = table.getElementsByTagName('tr');
+  for (var i = 1; i < rows.length; i++) {
+    var text = rows[i].innerText.toLowerCase();
+    rows[i].style.display = text.indexOf(filter) > -1 ? '' : 'none';
+  }
+}
+</script>
+</head>
+<body>
+<h1>Google Cloud Checks</h1>
+<h2>Severity Summary</h2>
+<ul>
+<li>Critical: 1</li>
+<li>High: 77</li>
+<li>Info: 3</li>
+<li>Low: 30</li>
+<li>Medium: 153</li>
+</ul>
+<input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Filter">
+<table id="checksTable">
+<thead><tr>
+<th onclick="sortTable(0)">Seq</th>
+<th onclick="sortTable(1)">Title</th>
+<th onclick="sortTable(2)">Category</th>
+<th onclick="sortTable(3)">Domain</th>
+<th onclick="sortTable(4)">Description</th>
+<th onclick="sortTable(5)">Severity</th>
+</tr></thead>
+<tbody>
+<tr><td>1</td><td>API Key API Restriction</td><td>API</td><td>Identity and Access Management</td><td>Ensure there are no unrestricted API keys available within your GCP project.</td><td>Medium</td></tr>
+<tr><td>2</td><td>API Key Active Services Only</td><td>API</td><td>Identity and Access Management</td><td>Ensure API Keys only exist for active services.</td><td>Low</td></tr>
+<tr><td>3</td><td>API Key Application Restriction</td><td>API</td><td>Identity and Access Management</td><td>Ensure there are no unrestricted API keys available within your GCP project.</td><td>Medium</td></tr>
+<tr><td>4</td><td>API Key Rotation</td><td>API</td><td>Identity and Access Management</td><td>Ensure that your Google Cloud API Keys are periodically regenerated.</td><td>Medium</td></tr>
+<tr><td>5</td><td>Project API Keys</td><td>API</td><td>Identity and Access Management</td><td>Ensure there are no API keys created within GCP project.</td><td>Low</td></tr>
+<tr><td>6</td><td>Dataset All Users Policy</td><td>BigQuery</td><td>Databases</td><td>Ensure that BigQuery datasets do not allow public read, write or delete access.</td><td>Medium</td></tr>
+<tr><td>7</td><td>Dataset Labels Added</td><td>BigQuery</td><td>Databases</td><td>Ensure that all BigQuery datasets have labels added.</td><td>Low</td></tr>
+<tr><td>8</td><td>Datasets CMK Encrypted</td><td>BigQuery</td><td>Databases</td><td>Ensure that BigQuery datasets are encrypted using desired encryption protection level.</td><td>High</td></tr>
+<tr><td>9</td><td>Tables CMK Encrypted</td><td>BigQuery</td><td>Databases</td><td>Ensure that BigQuery dataset tables are encrypted using desired encryption protection level.</td><td>High</td></tr>
+<tr><td>10</td><td>BigTable Instance Labels Added</td><td>BigTable</td><td>Databases</td><td>Ensure that all BigTable instances have labels added.</td><td>Low</td></tr>
+<tr><td>11</td><td>CLB CDN Enabled</td><td>CLB</td><td>Availability</td><td>Ensures that Cloud CDN is enabled on all load balancers</td><td>Medium</td></tr>
+<tr><td>12</td><td>CLB HTTPS Only</td><td>CLB</td><td>Availability</td><td>Ensures that HTTP(S) CLBs are configured to only accept connections on HTTPS ports.</td><td>High</td></tr>
+<tr><td>13</td><td>CLB Logging Enabled</td><td>CLB</td><td>Management and Governance</td><td>Ensures that logging is enabled for all HTTP(s) load balancers</td><td>High</td></tr>
+<tr><td>14</td><td>CLB No Instances</td><td>CLB</td><td>Availability</td><td>Detects CLBs that have no backend instances attached</td><td>Medium</td></tr>
+<tr><td>15</td><td>Security Policy Enabled</td><td>CLB</td><td>Availability</td><td>Ensures all backend services have an attached security policy</td><td>Medium</td></tr>
+<tr><td>16</td><td>Comment Control Enabled</td><td>CloudBuild</td><td>Application Integration</td><td>Ensure Comment Control is enabled for all cloud build triggers.</td><td>Medium</td></tr>
+<tr><td>17</td><td>Specific Source Branch</td><td>CloudBuild</td><td>Application Integration</td><td>Ensure cloud build triggers are configured with specific source branch.</td><td>Medium</td></tr>
+<tr><td>18</td><td>Trigger Has Tags</td><td>CloudBuild</td><td>Application Integration</td><td>Ensure cloud build triggers have tags.</td><td>Low</td></tr>
+<tr><td>19</td><td>User Approval Enabled</td><td>CloudBuild</td><td>Application Integration</td><td>Ensure User Approval is enabled for all cloud build triggers.</td><td>Medium</td></tr>
+<tr><td>20</td><td>Cloud Function Labels Added</td><td>Cloud Functions</td><td>Serverless</td><td>Ensure that all Cloud Functions have labels added.</td><td>Low</td></tr>
+<tr><td>21</td><td>Internet Exposure</td><td>Cloud Functions</td><td>Serverless</td><td>Ensures Cloud Functions are not publicly exposed to all inbound traffic.</td><td>Info</td></tr>
+<tr><td>22</td><td>Cloud Function Old Runtimes</td><td>Cloud Functions</td><td>Compute</td><td>Ensure Cloud Functions are not using deprecated runtime versions.</td><td>Medium</td></tr>
+<tr><td>23</td><td>Cloud Function All Users Policy</td><td>Cloud Functions</td><td>Serverless</td><td>Ensure cloud functions are not anonymously or publicly accessible.</td><td>High</td></tr>
+<tr><td>24</td><td>Cloud Function Default Service Account</td><td>Cloud Functions</td><td>Serverless</td><td>Ensures that Cloud Functions are not using the default service account.</td><td>Medium</td></tr>
+<tr><td>25</td><td>HTTP Trigger require HTTPS</td><td>Cloud Functions</td><td>Serverless</td><td>Ensure that Cloud Functions are configured to require HTTPS for HTTP invocations.</td><td>Medium</td></tr>
+<tr><td>26</td><td>Ingress All Traffic Disabled</td><td>Cloud Functions</td><td>Serverless</td><td>Ensure that Cloud Functions are configured to allow only internal traffic or traffic from Cloud Load Balancer.</td><td>Medium</td></tr>
+<tr><td>27</td><td>Cloud Function Serverless VPC Access</td><td>Cloud Functions</td><td>Serverless</td><td>Ensure CloudFunctions are allowed to access only VPC resources.</td><td>High</td></tr>
+<tr><td>28</td><td>Compute Allowed External IPs</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Define Allowed External IPs for VM Instances" constraint policy is enabled at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>29</td><td>Detailed Audit Logging Mode</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Detailed Audit Logging Mode" policy is configured at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>30</td><td>Disable Automatic IAM Grants</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Automatic IAM Grants for Default Service Accounts" policy is enforced at the organization level.</td><td>Medium</td></tr>
+<tr><td>31</td><td>Disable Default Encryption Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict Default Google-Managed Encryption for Cloud SQL Instances" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>32</td><td>Disable Guest Attributes</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Guest Attributes of Compute Engine Metadata" constraint policy is enabled at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>33</td><td>Disable Workload Identity Cluster Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Workload Identity Cluster Creation" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>34</td><td>Disable Service Account Key Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Service Account Key Creation" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>35</td><td>Disable Service Account Key Upload</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Service Account Key Upload" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>36</td><td>Disable Serial Port Access</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable VM serial port access" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>37</td><td>Disable Service Account Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Disable Service Account Creation" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>38</td><td>Disable VM IP Forwarding</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict VM IP Forwarding" constraint policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>39</td><td>Essential Contacts Configured</td><td>Resource Manager</td><td>Management and Governance</td><td>Ensure Essential Contacts is configured to designate email addresses for Google Cloud services to notify of important technical or security information.</td><td>Medium</td></tr>
+<tr><td>40</td><td>Location-Based Service Restriction</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Resource Location Restriction" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>41</td><td>Enforce Require OS Login</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Require OS Login" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>42</td><td>Enforce Restrict Authorized Networks</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict Authorized Networks on Cloud SQL instances" policy is enforced at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>43</td><td>Restrict Load Balancer Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict Load Balancer Creation for Types" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>44</td><td>Restrict Shared VPC Subnetworks</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict Shared VPC Subnetworks" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>45</td><td>Restrict VPC Peering</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict VPC Peering" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>46</td><td>Restrict VPN Peer IPs</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Restrict VPN Peer IPs" is enforced on the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>47</td><td>Skip Default Network Creation</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Skip Default Network Creation" constraint policy is enforces at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>48</td><td>Trusted Image Projects</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Define Trusted Image Projects" constraint policy is enforces at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>49</td><td>Enforce Uniform Bucket-Level Access</td><td>Resource Manager</td><td>Management and Governance</td><td>Determine if "Enforce uniform bucket-level access" policy is enabled at the GCP organization level.</td><td>Medium</td></tr>
+<tr><td>50</td><td>Environment Default Service Account</td><td>Cloud Composer</td><td>Content Delivery</td><td>Ensure Composer environment is not using the default compute engine service account</td><td>Low</td></tr>
+<tr><td>51</td><td>Environment Encryption</td><td>Cloud Composer</td><td>Content Delivery</td><td>Ensure Composer environments have encryption enabled using desired protection level.</td><td>High</td></tr>
+<tr><td>52</td><td>Environment Labels Added</td><td>Cloud Composer</td><td>Content Delivery</td><td>Ensures all Composer environments have labels added</td><td>Low</td></tr>
+<tr><td>53</td><td>Airflow Web Server Public Access</td><td>Cloud Composer</td><td>Content Delivery</td><td>Ensure Composer Airflow web server is not open to the world</td><td>Medium</td></tr>
+<tr><td>54</td><td>VM Disks CMK Encryption</td><td>Compute</td><td>Compute</td><td>Ensure that Virtual Machine instances are encrypted using customer-managed keys.</td><td>High</td></tr>
+<tr><td>55</td><td>Application Consistent Snapshots</td><td>Compute</td><td>Compute</td><td>Ensure that application consistent snapshots feature is enabled for snapshot schedules.</td><td>Medium</td></tr>
+<tr><td>56</td><td>Instance Automatic Restart Enabled</td><td>Compute</td><td>Compute</td><td>Ensure that Virtual Machine instances have automatic restart feature enabled.</td><td>Medium</td></tr>
+<tr><td>57</td><td>Autoscale Enabled</td><td>Compute</td><td>Compute</td><td>Ensures instance groups have autoscale enabled for high availability</td><td>High</td></tr>
+<tr><td>58</td><td>Autoscale Minimum CPU Utilization Target</td><td>Compute</td><td>Compute</td><td>Ensure that minimum CPU utilization target is greater or equal than set percentage.</td><td>High</td></tr>
+<tr><td>59</td><td>Confidential Computing Enabled</td><td>Compute</td><td>Compute</td><td>Ensure that Virtual Machine instances have confidential computing enabled.</td><td>Medium</td></tr>
+<tr><td>60</td><td>Connect Serial Ports Disabled</td><td>Compute</td><td>Compute</td><td>Ensures connecting to serial ports is not enabled for VM instances</td><td>Medium</td></tr>
+<tr><td>61</td><td>CSEK Encryption Enabled</td><td>Compute</td><td>Compute</td><td>Ensures Customer Supplied Encryption Key Encryption is enabled on disks</td><td>High</td></tr>
+<tr><td>62</td><td>Deprecated Images</td><td>Compute</td><td>Compute</td><td>Ensure that Compute instances are not created from deprecated images.</td><td>Medium</td></tr>
+<tr><td>63</td><td>Disk Automatic Backup Enabled</td><td>Compute</td><td>Compute</td><td>Ensure that Google Compute disks have scheduled snapshots configured.</td><td>Medium</td></tr>
+<tr><td>64</td><td>Disk In Use</td><td>Compute</td><td>Compute</td><td>Ensure that there are no unused Compute disks.</td><td>Medium</td></tr>
+<tr><td>65</td><td>Disk Labels Added</td><td>Compute</td><td>Compute</td><td>Ensure that all Compute Disks have labels added.</td><td>Low</td></tr>
+<tr><td>66</td><td>Disk MultiAz</td><td>Compute</td><td>Compute</td><td>Ensure that Compute disks have regional disk replication feature enabled for high availability.</td><td>Low</td></tr>
+<tr><td>67</td><td>Disk Old Snapshots</td><td>Compute</td><td>Compute</td><td>Ensure that Compute disk snapshots are deleted after defined time period.</td><td>Low</td></tr>
+<tr><td>68</td><td>Enable Usage Export</td><td>Compute</td><td>Compute</td><td>Ensure that setting is configured to export Compute instances usage to Cloud Storage bucket.</td><td>Medium</td></tr>
+<tr><td>69</td><td>Frequently Used Snapshots</td><td>Compute</td><td>Compute</td><td>Ensure that frequently used disks are created from images instead of snapshots to save networking cost.</td><td>Low</td></tr>
+<tr><td>70</td><td>Image Labels Added</td><td>Compute</td><td>Compute</td><td>Ensure that all VM disk images have labels added.</td><td>Low</td></tr>
+<tr><td>71</td><td>Images CMK Encrypted</td><td>Compute</td><td>Compute</td><td>Ensure Compute Images are encrypted using Customer Managed or Supplied Keys</td><td>High</td></tr>
+<tr><td>72</td><td>Instance Default Service Account</td><td>Compute</td><td>Compute</td><td>Ensures that compute instances are not configured to use the default service account.</td><td>Medium</td></tr>
+<tr><td>73</td><td>VM Instance Deletion Protection</td><td>Compute</td><td>Compute</td><td>Ensure that Virtual Machine instances have deletion protection enabled.</td><td>Medium</td></tr>
+<tr><td>74</td><td>Instance Desired Machine Type</td><td>Compute</td><td>Compute</td><td>Ensures that Virtual Machine instances are of given types.</td><td>High</td></tr>
+<tr><td>75</td><td>Instance Group Auto Healing Enabled</td><td>Compute</td><td>Compute</td><td>Ensure that instance groups have auto-healing enabled for high availability.</td><td>High</td></tr>
+<tr><td>76</td><td>Instance Labels Added</td><td>Compute</td><td>Compute</td><td>Ensure that all Virtual Machine instances have labels added.</td><td>Low</td></tr>
+<tr><td>77</td><td>VM Instances Least Privilege</td><td>Compute</td><td>Compute</td><td>Ensures that instances are not configured to use the default service account with full access to all cloud APIs</td><td>Medium</td></tr>
+<tr><td>78</td><td>Instance Level SSH Only</td><td>Compute</td><td>Compute</td><td>Ensures that instances are not configured to allow project-wide SSH keys</td><td>Medium</td></tr>
+<tr><td>79</td><td>Instance Maintenance Behavior</td><td>Compute</td><td>Compute</td><td>Ensure that "On Host Maintenance" configuration is set to Migrate for VM instances.</td><td>Medium</td></tr>
+<tr><td>80</td><td>VM Max Instances</td><td>Compute</td><td>Compute</td><td>Ensures the total number of VM instances does not exceed a set threshold</td><td>Medium</td></tr>
+<tr><td>81</td><td>Internet Exposure</td><td>Compute</td><td>Compute</td><td>Check if GCP virtual machines are exposed to the internet.</td><td>Info</td></tr>
+<tr><td>82</td><td>Instance Preemptibility Disabled</td><td>Compute</td><td>Compute</td><td>Ensure that preemptible Virtual Machine instances do not exist.</td><td>Medium</td></tr>
+<tr><td>83</td><td>Instance Public Access Disabled</td><td>Compute</td><td>Compute</td><td>Ensures that compute instances are not configured to allow public access.</td><td>High</td></tr>
+<tr><td>84</td><td>Instance Template Machine Type</td><td>Compute</td><td>Compute</td><td>Ensure that Cloud Virtual Machine instance templates are of given types.</td><td>Medium</td></tr>
+<tr><td>85</td><td>Instances Multi AZ</td><td>Compute</td><td>Compute</td><td>Ensures managed instances are regional for availability purposes.</td><td>Medium</td></tr>
+<tr><td>86</td><td>IP Forwarding Disabled</td><td>Compute</td><td>Compute</td><td>Ensures that IP forwarding is disabled on all instances</td><td>Medium</td></tr>
+<tr><td>87</td><td>OS Login 2FA Enabled</td><td>Compute</td><td>Compute</td><td>Ensure that Virtual Machines instances have OS logic feature enabled and configured with Two-Factor Authentication.</td><td>High</td></tr>
+<tr><td>88</td><td>OS Login Enabled</td><td>Compute</td><td>Compute</td><td>Ensures OS login is enabled for the project</td><td>Low</td></tr>
+<tr><td>89</td><td>Persistent Disks Auto Delete</td><td>Compute</td><td>Compute</td><td>Ensure that auto-delete is disabled for attached persistent disks.</td><td>Medium</td></tr>
+<tr><td>90</td><td>Public Disk Images</td><td>Compute</td><td>Compute</td><td>Ensure that your disk images are not being shared publicly.</td><td>Medium</td></tr>
+<tr><td>91</td><td>Shielded VM Enabled</td><td>Compute</td><td>Compute</td><td>Ensures that instances are configured with the shielded VM enabled</td><td>Medium</td></tr>
+<tr><td>92</td><td>Snapshot Encryption</td><td>Compute</td><td>Compute</td><td>Ensure Snapshots are encrypted using Customer Managed or Supplied Keys.</td><td>High</td></tr>
+<tr><td>93</td><td>Snapshot Labels Added</td><td>Compute</td><td>Compute</td><td>Ensure that Compute disk snapshots have labels added.</td><td>Low</td></tr>
+<tr><td>94</td><td>Key Protection Level</td><td>Cryptographic Keys</td><td>Application Integration</td><td>Ensure that cryptographic keys have protection level equal to or above desired protection level.</td><td>High</td></tr>
+<tr><td>95</td><td>Key Rotation</td><td>Cryptographic Keys</td><td>Application Integration</td><td>Ensures cryptographic keys are set to rotate on a regular schedule</td><td>Low</td></tr>
+<tr><td>96</td><td>KMS Public Access</td><td>Cryptographic Keys</td><td>Application Integration</td><td>Ensures cryptographic keys are not publicly accessible.</td><td>High</td></tr>
+<tr><td>97</td><td>Dataflow Hanged Jobs</td><td>Dataflow</td><td>Content Delivery</td><td>Ensure that Cloud Dataflow jobs are not in same state for more than defined amount of time.</td><td>Medium</td></tr>
+<tr><td>98</td><td>Dataflow Jobs Encryption</td><td>Dataflow</td><td>Content Delivery</td><td>Ensure that Google Dataflow jobs are encrypted with desired encryption level.</td><td>High</td></tr>
+<tr><td>99</td><td>Dataproc Cluster Encryption</td><td>Dataproc</td><td>Compute</td><td>Ensure that Dataproc clusters have encryption enabled using desired protection level.</td><td>High</td></tr>
+<tr><td>100</td><td>Dataproc Cluster Labels Added</td><td>Dataproc</td><td>Compute</td><td>Ensure that all Dataproc clusters have labels added.</td><td>Low</td></tr>
+<tr><td>101</td><td>Hadoop Secure Mode Enabled</td><td>Dataproc</td><td>Compute</td><td>Ensure that all Dataproc clusters have hadoop secure mode enabled.</td><td>Medium</td></tr>
+<tr><td>102</td><td>Delete Expired Deployments</td><td>Deployment Manager</td><td>Application Integration</td><td>Ensure that Cloud Deployment Manager deployment are deleted after desired number of days from their creation time.</td><td>Medium</td></tr>
+<tr><td>103</td><td>DNS Security Enabled</td><td>DNS</td><td>Content Delivery</td><td>Ensures that DNS Security is enabled on all managed zones</td><td>Medium</td></tr>
+<tr><td>104</td><td>DNS Security Signing Algorithm</td><td>DNS</td><td>Content Delivery</td><td>Ensures that DNS Security is not using the RSASHA1 algorithm for key or zone signing</td><td>Medium</td></tr>
+<tr><td>105</td><td>DNS Zone Labels Added</td><td>DNS</td><td>Content Delivery</td><td>Ensure Cloud DNS zones have labels added.</td><td>Low</td></tr>
+<tr><td>106</td><td>BigQuery Admin</td><td>IAM</td><td>Identity and Access Management</td><td>Ensure that there are no IAM Users with BigQuery Admin, BigQuery Data Owner or BigQuery Data Editor role at the project level.</td><td>Medium</td></tr>
+<tr><td>107</td><td>Bigtable Admin</td><td>IAM</td><td>Identity and Access Management</td><td>Ensure that there are no IAM Users with Bigtable Administrator role at the project level.</td><td>Medium</td></tr>
+<tr><td>108</td><td>Corporate Emails Only</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that no users are using their Gmail accounts for access to GCP.</td><td>Medium</td></tr>
+<tr><td>109</td><td>KMS User Separation</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that no users have the KMS admin role and any one of the CryptoKey roles.</td><td>Medium</td></tr>
+<tr><td>110</td><td>Member Admin</td><td>IAM</td><td>Identity and Access Management</td><td>Ensure that IAM members do not use primitive roles such as owner, editor or viewer.</td><td>Medium</td></tr>
+<tr><td>111</td><td>Pub/Sub Admin</td><td>IAM</td><td>Identity and Access Management</td><td>Ensure that there are no IAM Users with Pub/Sub Administrator role at the project level.</td><td>Medium</td></tr>
+<tr><td>112</td><td>Service Account Admin</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that user managed service accounts do not have any admin, owner, or write privileges.</td><td>Medium</td></tr>
+<tr><td>113</td><td>Service Account Key Rotation</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that service account keys are rotated within desired number of days.</td><td>Medium</td></tr>
+<tr><td>114</td><td>Service Account Managed Keys</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that service account keys are being managed by Google.</td><td>Medium</td></tr>
+<tr><td>115</td><td>Service Account Role</td><td>IAM</td><td>Identity and Access Management</td><td>Ensure no Service Account exists without any associated role.</td><td>Medium</td></tr>
+<tr><td>116</td><td>Service Account Separation</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that no users have both the Service Account User and Service Account Admin role.</td><td>Medium</td></tr>
+<tr><td>117</td><td>Service Account Token Creator</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that no users have the Service Account Token Creator role.</td><td>Medium</td></tr>
+<tr><td>118</td><td>Service Account User</td><td>IAM</td><td>Identity and Access Management</td><td>Ensures that no users have the Service Account User role.</td><td>High</td></tr>
+<tr><td>119</td><td>Service Limits</td><td>IAM</td><td>Identity and Access Management</td><td>Determines if the number of resources is close to the per-account limit.</td><td>Medium</td></tr>
+<tr><td>120</td><td>Alias IP Ranges Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have alias IP ranges enabled</td><td>Medium</td></tr>
+<tr><td>121</td><td>Automatic Node Repair Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes cluster nodes have automatic repair enabled</td><td>Medium</td></tr>
+<tr><td>122</td><td>Automatic Node Upgrades Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes cluster nodes have automatic upgrades enabled</td><td>Medium</td></tr>
+<tr><td>123</td><td>Basic Authentication Disabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure basic authentication is set to disabled on Kubernetes clusters.</td><td>Medium</td></tr>
+<tr><td>124</td><td>Binary Authorization Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure Binary Authorization is enabled on Kubernetes Clusters</td><td>Medium</td></tr>
+<tr><td>125</td><td>Client Certificate Disabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure client certificate authentication to Kubernetes clusters is disabled.</td><td>High</td></tr>
+<tr><td>126</td><td>Cluster Encryption Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure that GKE clusters have KMS encryption enabled to encrypt application-layer secrets.</td><td>High</td></tr>
+<tr><td>127</td><td>Cluster Labels Added</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have labels added</td><td>Low</td></tr>
+<tr><td>128</td><td>Cluster Least Privilege</td><td>Kubernetes</td><td>Containers</td><td>Ensures Kubernetes clusters using default service account are using minimal service account access scopes</td><td>Medium</td></tr>
+<tr><td>129</td><td>Internet Exposure</td><td>Kubernetes</td><td>Containers</td><td>Check if GKE clusters are exposed to the internet.</td><td>Info</td></tr>
+<tr><td>130</td><td>COS Image Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes cluster nodes have Container-Optimized OS enabled</td><td>High</td></tr>
+<tr><td>131</td><td>Default Service Account</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes cluster nodes are not using the default service account.</td><td>High</td></tr>
+<tr><td>132</td><td>Integrity Monitoring Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes shielded cluster node have integrity monitoring enabled</td><td>Medium</td></tr>
+<tr><td>133</td><td>Kubernetes Alpha Disabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure the GKE Cluster alpha cluster feature is disabled.</td><td>Medium</td></tr>
+<tr><td>134</td><td>Legacy Authorization Disabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure legacy authorization is set to disabled on Kubernetes clusters</td><td>High</td></tr>
+<tr><td>135</td><td>Logging Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have logging enabled</td><td>Medium</td></tr>
+<tr><td>136</td><td>Master Authorized Network</td><td>Kubernetes</td><td>Containers</td><td>Ensures master authorized networks is set to enabled on Kubernetes clusters</td><td>Medium</td></tr>
+<tr><td>137</td><td>Monitoring Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have monitoring enabled</td><td>Medium</td></tr>
+<tr><td>138</td><td>Network Policy Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have network policy enabled</td><td>Medium</td></tr>
+<tr><td>139</td><td>Node Encryption Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensure that GKE cluster nodes are encrypted using desired encryption protection level. </td><td>High</td></tr>
+<tr><td>140</td><td>Pod Security Policy Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures pod security policy is enabled for all Kubernetes clusters</td><td>Medium</td></tr>
+<tr><td>141</td><td>Private Cluster Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures private cluster is enabled for all Kubernetes clusters</td><td>High</td></tr>
+<tr><td>142</td><td>Private Endpoint</td><td>Kubernetes</td><td>Containers</td><td>Ensures the private endpoint setting is enabled for kubernetes clusters</td><td>Medium</td></tr>
+<tr><td>143</td><td>Secure Boot Enabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes cluster nodes have secure boot feature enabled.</td><td>Medium</td></tr>
+<tr><td>144</td><td>Shielded Nodes</td><td>Kubernetes</td><td>Containers</td><td>Ensure that shielded nodes setting is enabled for all Kubernetes clusters.</td><td>Medium</td></tr>
+<tr><td>145</td><td>Web Dashboard Disabled</td><td>Kubernetes</td><td>Containers</td><td>Ensures all Kubernetes clusters have the web dashboard disabled.</td><td>High</td></tr>
+<tr><td>146</td><td>Audit Configuration Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for audit configuration changes.</td><td>Medium</td></tr>
+<tr><td>147</td><td>Audit Logging Enabled</td><td>Logging</td><td>Management and Governance</td><td>Ensures that default audit logging is enabled on the organization or project.</td><td>Medium</td></tr>
+<tr><td>148</td><td>Custom Role Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for custom role creation and changes</td><td>Medium</td></tr>
+<tr><td>149</td><td>Log Sinks Enabled</td><td>Logging</td><td>Management and Governance</td><td>Ensures a log sink is enabled to export all logs</td><td>Medium</td></tr>
+<tr><td>150</td><td>Project Ownership Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for project ownership assignments and changes</td><td>Medium</td></tr>
+<tr><td>151</td><td>SQL Configuration Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for SQL configuration changes</td><td>Medium</td></tr>
+<tr><td>152</td><td>Storage Permissions Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for storage permission changes</td><td>Medium</td></tr>
+<tr><td>153</td><td>VPC Firewall Rule Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for firewall rule changes</td><td>Medium</td></tr>
+<tr><td>154</td><td>VPC Network Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for VPC network changes</td><td>Medium</td></tr>
+<tr><td>155</td><td>VPC Network Route Logging</td><td>Logging</td><td>Management and Governance</td><td>Ensures that logging and log alerts exist for VPC network route changes</td><td>Medium</td></tr>
+<tr><td>156</td><td>Dead Lettering Enabled</td><td>Pub/Sub</td><td>Application Integration</td><td>Ensure that each Google Pub/Sub subscription is configured to use dead-letter topic.</td><td>Low</td></tr>
+<tr><td>157</td><td>Topic All Users Policy</td><td>Pub/Sub</td><td>Application Integration</td><td>Ensure Pub/Sub Topics are not anonymously or publicly accessible</td><td>Medium</td></tr>
+<tr><td>158</td><td>Topic Encryption Enabled</td><td>Pub/Sub</td><td>Application Integration</td><td>Ensure that Google Pub/Sub topics are encrypted with desired encryption level.</td><td>High</td></tr>
+<tr><td>159</td><td>Topic Labels Added</td><td>Pub/Sub</td><td>Application Integration</td><td>Ensure that all Pub/Sub topics have labels added.</td><td>Low</td></tr>
+<tr><td>160</td><td>Access Approval Enabled</td><td>Security</td><td>Management and Governance</td><td>Ensure that Access Approval is enabled for the project.</td><td>Medium</td></tr>
+<tr><td>161</td><td>Asset Inventory Enabled</td><td>Service Usage</td><td>Management and Governance</td><td>Ensure that Asset Inventory service is enabled for the project.</td><td>Medium</td></tr>
+<tr><td>162</td><td>Spanner Instance Node Count</td><td>Spanner</td><td>Databases</td><td>Ensure than node count for Spanner instances is not above allowed count.</td><td>Medium</td></tr>
+<tr><td>163</td><td>Any Host Root Access</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances root user cannot be accessed from any host</td><td>High</td></tr>
+<tr><td>164</td><td>DB Automated Backups</td><td>SQL</td><td>Databases</td><td>Ensures automated backups are enabled for SQL instances</td><td>Medium</td></tr>
+<tr><td>165</td><td>DB Multiple AZ</td><td>SQL</td><td>Databases</td><td>Ensures that SQL instances have a failover replica to be cross-AZ for high availability</td><td>Medium</td></tr>
+<tr><td>166</td><td>DB Publicly Accessible</td><td>SQL</td><td>Databases</td><td>Ensures that SQL instances do not allow public access</td><td>Medium</td></tr>
+<tr><td>167</td><td>DB Restorable</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances can be restored to a recent point</td><td>Medium</td></tr>
+<tr><td>168</td><td>Database SSL Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL databases have SSL enabled</td><td>Medium</td></tr>
+<tr><td>169</td><td>MySQL Latest Version</td><td>SQL</td><td>Databases</td><td>Ensure that MySQL database servers are using the latest major version of MySQL database.</td><td>Low</td></tr>
+<tr><td>170</td><td>MySQL Local Infile Disabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for MySQL type does not have local infile flag enabled.</td><td>Medium</td></tr>
+<tr><td>171</td><td>MySQL Skip Show Database Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for MySQL type have skip show database flag enabled.</td><td>Medium</td></tr>
+<tr><td>172</td><td>MySQL Slow Query Log Enabled</td><td>SQL</td><td>Databases</td><td>Ensures that MySQL instances have slow query log flag enabled.</td><td>Medium</td></tr>
+<tr><td>173</td><td>PostgreSQL Latest Version</td><td>SQL</td><td>Databases</td><td>Ensure that PostgreSQL database servers are using the latest major version of PostgreSQL database.</td><td>Low</td></tr>
+<tr><td>174</td><td>PostgreSQL Log Checkpoints Enabled</td><td>SQL</td><td>Databases</td><td>Ensure that log_checkpoints flag is enabled for PostgreSQL instances.</td><td>Medium</td></tr>
+<tr><td>175</td><td>PostgreSQL Log Connections Flag Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log connections flag enabled.</td><td>Medium</td></tr>
+<tr><td>176</td><td>PostgreSQL Log Disconnections Flag Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log disconnections flag enabled.</td><td>Medium</td></tr>
+<tr><td>177</td><td>PostgreSQL Log Error Verbosity</td><td>SQL</td><td>Databases</td><td>Ensure SQL instances for PostgreSQL type have log error verbosity flag set to default or stricter.</td><td>Medium</td></tr>
+<tr><td>178</td><td>PostgreSQL Log Executor Stats Disabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log_executor_stats flag set to "off".</td><td>Medium</td></tr>
+<tr><td>179</td><td>PostgreSQL Log Hostname Flag Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log hostname flag enabled.</td><td>Medium</td></tr>
+<tr><td>180</td><td>PostgreSQL Log Lock Waits Flag Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log_lock_waits flag enabled.</td><td>Medium</td></tr>
+<tr><td>181</td><td>PostgreSQL Log Min Duration Statement</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log min duration statement flag disabled.</td><td>Medium</td></tr>
+<tr><td>182</td><td>PostgreSQL Log Min Error Statement</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log min error statement flag set to Error.</td><td>Medium</td></tr>
+<tr><td>183</td><td>PostgreSQL Log Min Messages</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log min messages flag set to Warning or stricter.</td><td>Medium</td></tr>
+<tr><td>184</td><td>PostgreSQL Log Parser Stats Disabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log_parser_stats flag set to "off".</td><td>Medium</td></tr>
+<tr><td>185</td><td>PostgreSQL Log Planner Stats Disabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log_planner_stats flag set to "off".</td><td>Medium</td></tr>
+<tr><td>186</td><td>PostgreSQL Log Statement</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log statement flag set to desired value.</td><td>Medium</td></tr>
+<tr><td>187</td><td>PostgreSQL Log Temp Files</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have log temp files flag enabled.</td><td>Medium</td></tr>
+<tr><td>188</td><td>PostgreSQL Max Connections</td><td>SQL</td><td>Databases</td><td>Ensure that max_connections is configured with optimal value for PostgreSQL instances.</td><td>Medium</td></tr>
+<tr><td>189</td><td>PostgreSQL Pg Audit Flag Enabled</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances for PostgreSQL type have cloudsql.enable_pgaudit flag enabled for centralized logging.</td><td>Medium</td></tr>
+<tr><td>190</td><td>SSL Certificate Rotation</td><td>SQL</td><td>Databases</td><td>Ensure that server certificates configured for Cloud SQL are rotated before they expire.</td><td>Medium</td></tr>
+<tr><td>191</td><td>SQL CMK Encryption</td><td>SQL</td><td>Databases</td><td>Ensure that Cloud SQL instances are encrypted using Customer Managed Keys (CMKs).</td><td>High</td></tr>
+<tr><td>192</td><td>SQL Contained Database Authentication</td><td>SQL</td><td>Databases</td><td>Ensures SQL instances of SQL Server type have Contained Database Authentication flag disabled.</td><td>Medium</td></tr>
+<tr><td>193</td><td>SQL Cross DB Ownership Chaining</td><td>SQL</td><td>Databases</td><td>Ensures SQL database instances of SQL Server type have cross db ownership chaining flag disabled.</td><td>Medium</td></tr>
+<tr><td>194</td><td>SQL Instance Labels Added</td><td>SQL</td><td>Databases</td><td>Ensures SQL database instances have labels added.</td><td>Low</td></tr>
+<tr><td>195</td><td>SQL No Public IPs</td><td>SQL</td><td>Databases</td><td>Ensure that SQL instances are using private IPs instead of public IPs.</td><td>Medium</td></tr>
+<tr><td>196</td><td>SQL Server Contained Database Authentication Flag Disabled</td><td>SQL</td><td>Databases</td><td>Ensure that contained database authentication flag is disabled for SQL Server instances.</td><td>Medium</td></tr>
+<tr><td>197</td><td>SQL Server External Scripts Flag Disabled</td><td>SQL</td><td>Databases</td><td>Ensure that external scripts enabled flag is disabled for SQL Server instances.</td><td>Medium</td></tr>
+<tr><td>198</td><td>SQL Server Remote Access Flag Disabled</td><td>SQL</td><td>Databases</td><td>Ensure that remote access flag is disabled for SQL Server instances.</td><td>Medium</td></tr>
+<tr><td>199</td><td>SQL Server Trace Flag Disabled</td><td>SQL</td><td>Databases</td><td>Ensure that 3625 (trace flag) database flag is disabled for SQL Server instances.</td><td>Medium</td></tr>
+<tr><td>200</td><td>SQL Server User Connections Flag</td><td>SQL</td><td>Databases</td><td>Ensure that user connections database flag for Cloud SQL Server Instances is set to desired value.</td><td>Medium</td></tr>
+<tr><td>201</td><td>SQL Server User Options Flag Disabled</td><td>SQL</td><td>Databases</td><td>Ensure user options database flag for Cloud SQL Server instances is not configured.</td><td>Medium</td></tr>
+<tr><td>202</td><td>Storage Auto Increase Enabled</td><td>SQL</td><td>Databases</td><td>Ensure that Cloud SQL DB instances have Automatic Storage Increase feature enabled and desired limit is set for storage increases.</td><td>Medium</td></tr>
+<tr><td>203</td><td>Storage Bucket All Users Policy</td><td>Storage</td><td>Storage</td><td>Ensures Storage bucket policies do not allow global write, delete, or read permissions</td><td>High</td></tr>
+<tr><td>204</td><td>Bucket Encryption</td><td>Storage</td><td>Storage</td><td>Ensure that Cloud Storage buckets have encryption enabled using desired protection level.</td><td>High</td></tr>
+<tr><td>205</td><td>Bucket Labels Added</td><td>Storage</td><td>Storage</td><td>Ensure that all Cloud Storage buckets have labels added.</td><td>Low</td></tr>
+<tr><td>206</td><td>Bucket Lifecycle Configured</td><td>Storage</td><td>Storage</td><td>Ensure that Cloud Storage buckets are using lifecycle management rules to transition objects between storage classes.</td><td>Medium</td></tr>
+<tr><td>207</td><td>Bucket Logging</td><td>Storage</td><td>Storage</td><td>Ensures object logging is enabled on storage buckets</td><td>Medium</td></tr>
+<tr><td>208</td><td>Storage Bucket Retention Policy</td><td>Storage</td><td>Storage</td><td>Ensures bucket retention policy is set and locked to prevent deleting or updating of bucket objects or retention policy.</td><td>Medium</td></tr>
+<tr><td>209</td><td>Bucket Uniform Level Access</td><td>Storage</td><td>Storage</td><td>Ensures that uniform level access is enabled on storage buckets.</td><td>Medium</td></tr>
+<tr><td>210</td><td>Bucket Versioning</td><td>Storage</td><td>Storage</td><td>Ensures object versioning is enabled on storage buckets</td><td>Low</td></tr>
+<tr><td>211</td><td>Vertex AI Model Encryption</td><td>AI & ML</td><td>Machine Learning</td><td>Ensure that Vertex AI models are encrypted using desired encryption protection level.</td><td>High</td></tr>
+<tr><td>212</td><td>Vertex AI Model Labels Added</td><td>AI & ML</td><td>Machine Learning</td><td>Ensure that all Vertex AI models have labels added.</td><td>Low</td></tr>
+<tr><td>213</td><td>Vertex AI Dataset Encryption</td><td>AI & ML</td><td>Machine Learning</td><td>Ensure that Vertex AI datasets are encrypted using desired encryption protection level.</td><td>High</td></tr>
+<tr><td>214</td><td>Vertex AI Dataset Labels Added</td><td>AI & ML</td><td>Machine Learning</td><td>Ensure that all Vertex AI datasets have labels added.</td><td>Low</td></tr>
+<tr><td>215</td><td>Default VPC Exists</td><td>VPC Network</td><td>Network Access Control</td><td>Ensures that your Google Cloud Project does not a default network.</td><td>Low</td></tr>
+<tr><td>216</td><td>Default VPC In Use</td><td>VPC Network</td><td>Network Access Control</td><td>Determines whether the default VPC is being used for launching VM instances</td><td>High</td></tr>
+<tr><td>217</td><td>VPC DNS Logging Enabled</td><td>VPC Network</td><td>Network Access Control</td><td>Ensure that All VPC Network has DNS logging enabled.</td><td>Medium</td></tr>
+<tr><td>218</td><td>Excessive Firewall Rules</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if there are an excessive number of firewall rules in the account</td><td>Medium</td></tr>
+<tr><td>219</td><td>Firewall Logging Metadata</td><td>VPC Network</td><td>Network Access Control</td><td>Ensure that VPC Network firewall logging is configured to exclude logging metadata in order to reduce the size of the log files.</td><td>Medium</td></tr>
+<tr><td>220</td><td>Flow Logs Enabled</td><td>VPC Network</td><td>Network Access Control</td><td>Ensures VPC flow logs are enabled for traffic logging</td><td>Medium</td></tr>
+<tr><td>221</td><td>Instance Default Network</td><td>VPC Network</td><td>Network Access Control</td><td>Ensure no VM instances exist in default network.</td><td>Medium</td></tr>
+<tr><td>222</td><td>Legacy Network Exists</td><td>VPC Network</td><td>Network Access Control</td><td>Ensures that your Google Cloud Project does not have legacy networks</td><td>Medium</td></tr>
+<tr><td>223</td><td>Multiple Subnets</td><td>VPC Network</td><td>Network Access Control</td><td>Ensures that VPCs have multiple networks to provide a layered architecture</td><td>Medium</td></tr>
+<tr><td>224</td><td>Open All Ports</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if all ports are open to the public</td><td>High</td></tr>
+<tr><td>225</td><td>Open All Ports Egress</td><td>VPC Network</td><td>Network Access Control</td><td>Ensure no firewall rules allow egress to all ports and protocols.</td><td>High</td></tr>
+<tr><td>226</td><td>Open CIFS</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if UDP port 445 for CIFS is open to the public</td><td>High</td></tr>
+<tr><td>227</td><td>Open Cassandra</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 7001 for Cassandra is open to the public</td><td>High</td></tr>
+<tr><td>228</td><td>Open Cassandra Client</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 9042 for Cassandra Client is open to the public</td><td>High</td></tr>
+<tr><td>229</td><td>Open Cassandra Internode</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 7000 for Cassandra Internode is open to the public</td><td>High</td></tr>
+<tr><td>230</td><td>Open Cassandra Monitoring</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 7199 for Cassandra Monitoring is open to the public</td><td>High</td></tr>
+<tr><td>231</td><td>Open Cassandra Thrift</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 9160 for Cassandra Thrift is open to the public</td><td>High</td></tr>
+<tr><td>232</td><td>Open Custom Ports</td><td>VPC Network</td><td>Network Access Control</td><td>Ensure that defined custom ports are not open to public.</td><td>High</td></tr>
+<tr><td>233</td><td>Open DNS</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP or UDP port 53 for DNS is open to the public</td><td>High</td></tr>
+<tr><td>234</td><td>Open Docker</td><td>VPC Network</td><td>Network Access Control</td><td>Determine if Docker port 2375 or 2376 is open to the public</td><td>High</td></tr>
+<tr><td>235</td><td>Open Elasticsearch</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP ports 9200, 9300 for Elasticsearch are open to the public</td><td>High</td></tr>
+<tr><td>236</td><td>Open FTP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 20 or 21 for FTP is open to the public</td><td>High</td></tr>
+<tr><td>237</td><td>Open HTTP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 80 for HTTP is open to the public</td><td>High</td></tr>
+<tr><td>238</td><td>Open Hadoop HDFS NameNode Metadata Service</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 8020 for HDFS NameNode metadata service is open to the public.</td><td>High</td></tr>
+<tr><td>239</td><td>Open Hadoop HDFS NameNode WebUI</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 50070 and 50470 for Hadoop/HDFS NameNode WebUI service is open to the public</td><td>High</td></tr>
+<tr><td>240</td><td>Open Internal web</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if internal web port 8080 is open to the public</td><td>High</td></tr>
+<tr><td>241</td><td>Open Kibana</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 5601 for Kibana is open to the public</td><td>High</td></tr>
+<tr><td>242</td><td>Open LDAP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP or UDP port 389 for LDAP is open to the public</td><td>High</td></tr>
+<tr><td>243</td><td>Open LDAPS</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 636 for LDAP SSL is open to the public</td><td>High</td></tr>
+<tr><td>244</td><td>Open Memcached</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP or UDP port 11211 for Memcached is open to the public</td><td>High</td></tr>
+<tr><td>245</td><td>Open MongoDB</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 27017, 27018 or 27019 for MongoDB is open to the public</td><td>High</td></tr>
+<tr><td>246</td><td>Open MSSQL</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 1433 for MSSQL is open to the public.</td><td>High</td></tr>
+<tr><td>247</td><td>Open MySQL</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 4333 or 3306 for MySQL is open to the public</td><td>High</td></tr>
+<tr><td>248</td><td>Open NetBIOS</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if UDP port 137, 138 or 139 for NetBIOS is open to the public</td><td>High</td></tr>
+<tr><td>249</td><td>Open Oracle</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 1521, 2483 for Oracle is open to the public</td><td>High</td></tr>
+<tr><td>250</td><td>Open Oracle Auto Data Warehouse</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 1522 for Oracle Auto Data Warehouse is open to the public</td><td>High</td></tr>
+<tr><td>251</td><td>Open PostgreSQL</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 5432 for PostgreSQL is open to the public</td><td>High</td></tr>
+<tr><td>252</td><td>Open RDP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 3389 for RDP is open to the public</td><td>High</td></tr>
+<tr><td>253</td><td>Open RPC</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 135 for RPC is open to the public</td><td>High</td></tr>
+<tr><td>254</td><td>Open Redis</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 6379 for Redis is open to the public</td><td>High</td></tr>
+<tr><td>255</td><td>Open SMBoTCP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 445 for Windows SMB over TCP is open to the public</td><td>High</td></tr>
+<tr><td>256</td><td>Open SMTP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 25 for SMTP is open to the public</td><td>High</td></tr>
+<tr><td>257</td><td>Open SNMP</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if UDP port 161 for SNMP is open to the public</td><td>High</td></tr>
+<tr><td>258</td><td>Open SQLServer</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 1433 or UDP port 1434 for SQL Server is open to the public</td><td>High</td></tr>
+<tr><td>259</td><td>Open SSH</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 22 for SSH is open to the public</td><td>High</td></tr>
+<tr><td>260</td><td>Open Salt</td><td>VPC Network</td><td>Network Access Control</td><td>Determine if TCP ports 4505 or 4506 for the Salt master are open to the public</td><td>Critical</td></tr>
+<tr><td>261</td><td>Open Telnet</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 23 for Telnet is open to the public</td><td>High</td></tr>
+<tr><td>262</td><td>Open VNC Client</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 5500 for VNC Client is open to the public</td><td>High</td></tr>
+<tr><td>263</td><td>Open VNC Server</td><td>VPC Network</td><td>Network Access Control</td><td>Determines if TCP port 5900 for VNC Server is open to the public</td><td>High</td></tr>
+<tr><td>264</td><td>Private Access Enabled</td><td>VPC Network</td><td>Network Access Control</td><td>Ensures Private Google Access is enabled for all Subnets</td><td>Medium</td></tr>
+</tbody></table>
+</body>
+</html>

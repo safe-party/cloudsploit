@@ -1542,6 +1542,7 @@ module.exports = {
         'apiKeyActiveServices'          : require(__dirname + '/plugins/google/api/apiKeyActiveServices.js'),
         'projectAPIKeys'                : require(__dirname + '/plugins/google/api/projectAPIKeys.js'),
         'apiKeyAPIRestriction'          : require(__dirname + '/plugins/google/api/apiKeyAPIRestriction.js'),
+        'secretRotation'               : require(__dirname + '/plugins/google/secretmanager/secretRotation.js'),
 
         'privateEndpoint'               : require(__dirname + '/plugins/google/kubernetes/privateEndpoint.js'),
         'monitoringEnabled'             : require(__dirname + '/plugins/google/kubernetes/monitoringEnabled.js'),
